@@ -1,7 +1,9 @@
 from fastapi import APIRouter
-from sqlalchemy import select, insert
+from sqlalchemy import select, insert, delete
+from sqlalchemy.exc import NoResultFound
 
 from app.database import async_session_maker
+from app.exceptions import NoRowFindToDelete
 
 
 class BaseDAO:
@@ -36,3 +38,13 @@ class BaseDAO:
             await session.commit()
             user_id = result.scalar_one()
             return user_id
+
+    @classmethod
+    async def delete(cls, **filter_by):
+        async with async_session_maker() as session:
+            query = delete(cls.model).filter_by(**filter_by).returning(cls.model)
+            result = await session.execute(query)
+            await session.commit()
+            deleted = result.mappings().one_or_none()
+            return deleted
+

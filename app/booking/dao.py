@@ -1,7 +1,7 @@
 # dao ==  data access object, == repo == services
 from datetime import date
 
-from sqlalchemy import select, insert, and_, func
+from sqlalchemy import select, insert, and_, func, delete
 
 from app.booking.models import Bookings
 from app.booking.schemas import BookingsSchema
@@ -100,3 +100,5 @@ class BookingDAO(BaseDAO):
             bookings = await session.execute(query_bookings)
             bookings = bookings.mappings().all()
             return bookings
+
+

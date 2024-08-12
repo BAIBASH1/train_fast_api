@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends
 
 from app.booking.schemas import BookingsSchema
 from app.booking.dao import BookingDAO
-from app.exceptions import RoomCannotBeBookedException
+from app.exceptions import RoomCannotBeBookedException, NoRowFindToDelete
 from app.users.models import Users
 from app.users.dependencies import get_current_user
 
@@ -41,3 +41,19 @@ async def add_booking(
     )
     if not booked_room:
         raise RoomCannotBeBookedException
+
+
+@router.delete("/{bookings_id}")
+async def delete_bookings(
+        bookings_id: int,
+        user: Users = Depends(get_current_user)
+):
+    deleted_bookings = await BookingDAO.delete(
+        id=bookings_id,
+        user_id=user.id,
+    )
+    if not deleted_bookings:
+        raise NoRowFindToDelete
+
+    return deleted_bookings
+
