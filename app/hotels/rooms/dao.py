@@ -1,15 +1,14 @@
 from datetime import date
 
-from sqlalchemy import select, and_, func, or_
+from sqlalchemy import select, and_, func
 from sqlalchemy.sql.functions import count
 
 from app.booking.models import Bookings
 from app.dao.base import BaseDAO
-from app.database import async_session_maker, engine
+from app.database import async_session_maker
 from app.hotels.models import Hotels
 from app.hotels.rooms.models import Rooms
 from app.hotels.rooms.schemas import HotelRoomsSchema
-from app.hotels.schemas import SHotelsRoomsLeft
 
 
 class RoomsDAO(BaseDAO):
@@ -59,7 +58,6 @@ class RoomsDAO(BaseDAO):
         )
 
         async with async_session_maker() as session:
-            print(hotel_rooms.compile(engine, compile_kwargs={"literal_binds": True}))
             res = await session.execute(hotel_rooms)
             hotel_rooms = res.mappings().all()
             return hotel_rooms

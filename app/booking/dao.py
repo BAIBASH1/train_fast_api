@@ -1,9 +1,10 @@
 # dao ==  data access object, == repo == services
 from datetime import date
 
-from sqlalchemy import select, insert, and_, or_, func
+from sqlalchemy import select, insert, and_, func
 
 from app.booking.models import Bookings
+from app.booking.schemas import BookingsSchema
 from app.database import async_session_maker
 from app.dao.base import BaseDAO
 from app.hotels.rooms.models import Rooms
@@ -70,3 +71,32 @@ class BookingDAO(BaseDAO):
                 return booking_new.scalar()
             else:
                 return None
+
+    @classmethod
+    async def find_all(
+            cls,
+            user_id: int,
+    ) -> list[BookingsSchema]:
+        async with async_session_maker() as session:
+            query_bookings = select(
+                Bookings.room_id,
+                Bookings.user_id,
+                Bookings.date_from,
+                Bookings.date_to,
+                Bookings.price,
+                Bookings.total_cost,
+                Bookings.total_days,
+                Rooms.image_id,
+                Rooms.name,
+                Rooms.description,
+                Rooms.services,
+            ).select_from(
+                Bookings
+            ).join(
+                Rooms, Rooms.id == Bookings.room_id, isouter=True
+            ).where(
+                user_id == Bookings.user_id
+            )
+            bookings = await session.execute(query_bookings)
+            bookings = bookings.mappings().all()
+            return bookings
