@@ -70,10 +70,3 @@ class BookingDAO(BaseDAO):
                 return booking_new.scalar()
             else:
                 return None
-
-        # async with async_session_maker() as session:
-        #     query = insert(cls.model).values(**data).returning(cls.model.id)
-        #     result = await session.execute(query)
-        #     await session.commit()
-        #     user_id = result.scalar_one()
-        #     return user_id

@@ -39,8 +39,3 @@ async def add_booking(
     )
     if not booked_room:
         raise RoomCannotBeBookedException
-
-# @router.get("/{bookings_id}") # equal "/bookings/{bookings_id}"
-# def get_bookings2():
-#     ...
-

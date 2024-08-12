@@ -13,9 +13,9 @@ async def get_hotels(
         date_from: date,
         date_to: date
 ):
-    await HotelsDAO.find_all(
+    hotels = await HotelsDAO.find_all_in_location_with_rooms_left(
         location=location,
         date_from=date_from,
         date_to=date_to,
     )
-    ...
+    return hotels
