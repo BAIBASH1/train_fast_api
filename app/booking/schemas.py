@@ -1,9 +1,8 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Json
 from datetime import date
 
 
-class SBookings(BaseModel):
-    id: int
+class BookingsSchema(BaseModel):
     room_id: int
     user_id: int
     date_from: date
@@ -11,3 +10,7 @@ class SBookings(BaseModel):
     price: int
     total_cost: int
     total_days: int
+    image_id: int
+    name: str
+    description: str | None
+    services: list[str]

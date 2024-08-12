@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Json
 
 
-class SHotelsRoomsLeft(BaseModel):
+class HotelsRoomsLeftSchema(BaseModel):
     id: int
     name: str
     location: str

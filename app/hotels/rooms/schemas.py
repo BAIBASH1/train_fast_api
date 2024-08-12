@@ -6,7 +6,7 @@ class HotelRoomsSchema(BaseModel):
     hotel_id: int
     name: str
     description: str
-    services: Json
+    services: list[str]
     price: int
     quantity: int
     image_id: int
