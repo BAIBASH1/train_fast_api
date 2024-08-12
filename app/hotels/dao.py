@@ -8,7 +8,7 @@ from app.dao.base import BaseDAO
 from app.database import async_session_maker, engine
 from app.hotels.models import Hotels
 from app.hotels.rooms.models import Rooms
-from app.hotels.schemas import SHotelsRoomsLeft
+from app.hotels.schemas import HotelsRoomsLeftSchema
 
 
 class HotelsDAO(BaseDAO):
@@ -20,7 +20,7 @@ class HotelsDAO(BaseDAO):
             location: str,
             date_from: date,
             date_to: date,
-    ) -> list[SHotelsRoomsLeft]:
+    ) -> list[HotelsRoomsLeftSchema]:
         busy_rooms = select(
             Rooms.hotel_id.label('hotel_id'), count(Bookings.id).label('non_left')
         ).select_from(
