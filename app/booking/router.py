@@ -26,7 +26,7 @@ async def get_bookings(
     return result
 
 
-@router.post("/add")
+@router.post("")
 async def add_booking(
         room_id: int,
         date_from: date,
@@ -43,7 +43,7 @@ async def add_booking(
         raise RoomCannotBeBookedException
 
 
-@router.delete("/{bookings_id}")
+@router.delete("")
 async def delete_bookings(
         bookings_id: int,
         user: Users = Depends(get_current_user)
