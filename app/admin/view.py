@@ -20,5 +20,3 @@ class HotelsAdmin(ModelView, model=Hotels):
 
 class RoomsAdmin(ModelView, model=Rooms):
     column_list = [c.name for c in Rooms.__table__.c]
-
-

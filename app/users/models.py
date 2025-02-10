@@ -1,10 +1,10 @@
-from sqlalchemy.orm import Mapped, relationship, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
 
 
 class Users(Base):
-    __tablename__ = 'users'
+    __tablename__ = "users"
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     email: Mapped[str] = mapped_column(nullable=False)
@@ -13,4 +13,3 @@ class Users(Base):
     bookings: Mapped[list["Bookings"]] = relationship(
         back_populates="user",
     )
-

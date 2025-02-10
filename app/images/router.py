@@ -1,5 +1,8 @@
-from fastapi import UploadFile, APIRouter
 import shutil
+
+from fastapi import APIRouter, UploadFile
+
+from app.tasks.tasks import proceed_picture
 
 router = APIRouter(
     prefix="/images",
@@ -9,5 +12,7 @@ router = APIRouter(
 
 @router.post("/hotels")
 async def add_hotel_image(name: int, file: UploadFile):
-    with open(f'app/static/images/{name}.webp', "wb+") as file_object:
+    im_path = f"app/static/images/{name}.webp"
+    with open(im_path, "wb+") as file_object:
         shutil.copyfileobj(file.file, file_object)
+    proceed_picture.delay(im_path)

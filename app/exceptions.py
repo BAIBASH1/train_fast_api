@@ -46,3 +46,13 @@ class RoomCannotBeBookedException(BookingExceptions):
 class NoRowFindToDelete(BookingExceptions):
     status_code = status.HTTP_409_CONFLICT
     detail = "не найдены бронирования для удаления"
+
+
+class LargeIntervalBetweenDates(BookingExceptions):
+    status_code = status.HTTP_400_BAD_REQUEST
+    detail = "слишком большой интервал между датами"
+
+
+class DateToEarlierThanDateFrom(BookingExceptions):
+    status_code = status.HTTP_400_BAD_REQUEST
+    detail = "дата конца периода раньше чем начало"

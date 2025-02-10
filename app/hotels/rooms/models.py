@@ -1,11 +1,11 @@
-from sqlalchemy import ForeignKey, JSON
+from sqlalchemy import JSON, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
 
 
 class Rooms(Base):
-    __tablename__ = 'rooms'
+    __tablename__ = "rooms"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     hotel_id: Mapped[int] = mapped_column(ForeignKey("hotels.id"), nullable=False)

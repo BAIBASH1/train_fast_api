@@ -1,9 +1,6 @@
-from fastapi import APIRouter
-from sqlalchemy import select, insert, delete
-from sqlalchemy.exc import NoResultFound
+from sqlalchemy import delete, insert, select
 
 from app.database import async_session_maker
-from app.exceptions import NoRowFindToDelete
 
 
 class BaseDAO:
@@ -17,7 +14,7 @@ class BaseDAO:
             return result.mappings().one_or_none()
 
     @classmethod
-    async def find_one_or_none(cls,  **filter_by):
+    async def find_one_or_none(cls, **filter_by):
         async with async_session_maker() as session:
             query = select(cls.model.__table__.columns).filter_by(**filter_by)
             result = await session.execute(query)
@@ -45,6 +42,5 @@ class BaseDAO:
             query = delete(cls.model).filter_by(**filter_by).returning(cls.model)
             result = await session.execute(query)
             await session.commit()
-            deleted = result.mappings().one_or_none()
+            deleted = result.scalars().one_or_none()
             return deleted
-

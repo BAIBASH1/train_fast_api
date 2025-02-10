@@ -1,25 +1,32 @@
-from fastapi import FastAPI
+from time import time
+
+import sentry_sdk
+from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
-
-
-from app.admin.view import RoomsAdmin, BookingsAdmin, UserAdmin, HotelsAdmin
-from app.database import engine
-from app.pages.router import router as router_page
-from app.users.router import router as router_users
-from app.booking.router import router as router_bookings
-from app.hotels.rooms.router import router as router_hotels_rooms
-from app.images.router import router as router_images
-
-
+from fastapi_cache import FastAPICache
+from fastapi_cache.backends.redis import RedisBackend
+from fastapi_versioning import VersionedFastAPI
+from prometheus_fastapi_instrumentator import Instrumentator
+from redis import asyncio as aioredis
 from sqladmin import Admin
 
+from app.admin.view import BookingsAdmin, HotelsAdmin, RoomsAdmin, UserAdmin
+from app.booking.router import router as router_bookings
+from app.database import engine
+from app.hotels.rooms.router import router as router_hotels_rooms
+from app.images.router import router as router_images
+from app.logger import logger
+from app.pages.router import router as router_page
+from app.users.router import router as router_users
+from config import settings
 
 app = FastAPI()
 
-app.mount(
-    path="/static",
-    app=StaticFiles(directory="app/static"),
-    name="static"
+sentry_sdk.init(
+    dsn="https://8ecf3717ca0a87bf7cf10f076b23e938@sentry.dev.eventgenie.ai/8",
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    traces_sample_rate=1.0,
 )
 
 
@@ -29,35 +36,45 @@ app.include_router(router_hotels_rooms)
 app.include_router(router_page)
 app.include_router(router_images)
 
+
+@app.on_event("startup")
+async def startup():
+    redis = aioredis.from_url(
+        f"redis://{settings.REDIS_HOST}:{settings.REDIS_PORT}",
+        encoding="utf-8",
+        decode_responses=True,
+    )
+    FastAPICache.init(RedisBackend(redis), prefix="/cache")
+
+
+@app.middleware("http")
+async def record_process_time(request: Request, call_next):
+    start_time = time()
+    response = await call_next(request)
+    logger.info(
+        "Request execution time", extra={"process_time": round(time() - start_time, 3)}
+    )
+    return response
+
+
+app = VersionedFastAPI(
+    app,
+    version_format="{major}",
+    prefix_format="/v{major}",
+    description="Greet users with a nice message",
+)
+
+app.mount(path="/static", app=StaticFiles(directory="app/static"), name="static")
+
+instrumentor = Instrumentator(
+    should_group_status_codes=False,
+    excluded_handlers=[".*admin.*", "/metrics"],
+)
+
+instrumentor.instrument(app).expose(app)
+
 admin = Admin(app, engine)
 admin.add_view(BookingsAdmin)
 admin.add_view(UserAdmin)
 admin.add_view(HotelsAdmin)
 admin.add_view(RoomsAdmin)
-
-# class SBooking(BaseModel):
-#     room_id: int
-#     date_from: date
-#     date_to: date
-#
-#
-# class SHotel(BaseModel):
-#     address: str
-#     name: str
-#     stars: int
-#
-#
-# class HotelsSearchArgs:
-#     def __init__(
-#             self,
-#             location: str,
-#             date_from: str,
-#             date_to: str,
-#             stars: Optional[int] = Query(None, ge=1, le=5),
-#             has_spa: Optional[bool] = None,
-#     ):
-#         self.location = location
-#         self.date_from = date_from
-#         self.date_to = date_to
-#         self.stars = stars
-#         self.has_spa = has_spa

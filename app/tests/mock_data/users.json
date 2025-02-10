@@ -1,0 +1,10 @@
+[
+  {
+    "email": "firstuser@user.ru",
+    "hashed_password": "$2b$12$SSDRgNzqVtLDFsXlGUeXs.k3mGsPYXSRZthMQx.ACofw7JKQ0m4UG"
+  },
+  {
+    "email": "seconduser@user.ru",
+    "hashed_password": "$2b$12$3CeuHnrEwfWhBmujITiYn.H6M6APbbPZosuDHSbPDi61MzcPGYT5S"
+  }
+]
