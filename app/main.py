@@ -3,7 +3,6 @@ from time import time
 
 import sentry_sdk
 from fastapi import FastAPI, Request
-from fastapi.openapi.utils import get_openapi
 from fastapi.staticfiles import StaticFiles
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
@@ -58,12 +57,6 @@ async def record_process_time(request: Request, call_next):
     )
     return response
 
-openapi_schema = get_openapi(
-    title="My API",
-    version="1.0.0",
-    description="This is a sample API",
-    routes=app.routes,
-)
 app = VersionedFastAPI(
     app,
     version_format="{major}",
