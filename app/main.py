@@ -24,7 +24,7 @@ from config import settings
 app = FastAPI()
 
 sentry_sdk.init(
-    dsn="https://8ecf3717ca0a87bf7cf10f076b23e938@sentry.dev.eventgenie.ai/8",
+    dsn=settings.SENTRY_LINK,
     # Set traces_sample_rate to 1.0 to capture 100%
     # of transactions for performance monitoring.
     traces_sample_rate=1.0,
