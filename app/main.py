@@ -1,7 +1,10 @@
+import json
+import sys
 from time import time
 
 import sentry_sdk
 from fastapi import FastAPI, Request
+from fastapi.openapi.utils import get_openapi
 from fastapi.staticfiles import StaticFiles
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
@@ -9,6 +12,9 @@ from fastapi_versioning import VersionedFastAPI
 from prometheus_fastapi_instrumentator import Instrumentator
 from redis import asyncio as aioredis
 from sqladmin import Admin
+from os.path import abspath, dirname
+
+sys.path.insert(0, dirname(dirname(abspath(__file__))))
 
 from app.admin.view import BookingsAdmin, HotelsAdmin, RoomsAdmin, UserAdmin
 from app.booking.router import router as router_bookings
@@ -56,7 +62,12 @@ async def record_process_time(request: Request, call_next):
     )
     return response
 
-
+openapi_schema = get_openapi(
+    title="My API",
+    version="1.0.0",
+    description="This is a sample API",
+    routes=app.routes,
+)
 app = VersionedFastAPI(
     app,
     version_format="{major}",
@@ -78,3 +89,10 @@ admin.add_view(BookingsAdmin)
 admin.add_view(UserAdmin)
 admin.add_view(HotelsAdmin)
 admin.add_view(RoomsAdmin)
+
+
+# Сохранение OpenAPI схемы в файл
+with open("openapi.json", "w") as f:
+    json.dump(openapi_schema, f, indent=2)
+
+print("OpenAPI schema saved to openapi.json")
