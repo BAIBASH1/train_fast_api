@@ -1,4 +1,3 @@
-import json
 import sys
 from time import time
 
@@ -12,9 +11,6 @@ from fastapi_versioning import VersionedFastAPI
 from prometheus_fastapi_instrumentator import Instrumentator
 from redis import asyncio as aioredis
 from sqladmin import Admin
-from os.path import abspath, dirname
-
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
 
 from app.admin.view import BookingsAdmin, HotelsAdmin, RoomsAdmin, UserAdmin
 from app.booking.router import router as router_bookings
@@ -89,10 +85,3 @@ admin.add_view(BookingsAdmin)
 admin.add_view(UserAdmin)
 admin.add_view(HotelsAdmin)
 admin.add_view(RoomsAdmin)
-
-
-# Сохранение OpenAPI схемы в файл
-with open("openapi.json", "w") as f:
-    json.dump(openapi_schema, f, indent=2)
-
-print("OpenAPI schema saved to openapi.json")
