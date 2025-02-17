@@ -1,6 +1,19 @@
-from sqlalchemy import NullPool
+"""
+Database Configuration and Initialization.
+
+This module configures and initializes the database for the application using SQLAlchemy.
+It provides the engine and session maker for interacting with the database asynchronously.
+It also includes a function for initializing the models in the application.
+
+Attributes:
+    async_session_maker (sessionmaker): The session maker for creating database sessions.
+    engine (Engine): The SQLAlchemy engine used for interacting with the database.
+"""
+from datetime import datetime
+
+from sqlalchemy import NullPool, func
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from sqlalchemy.orm import DeclarativeBase, sessionmaker
+from sqlalchemy.orm import DeclarativeBase, sessionmaker, Mapped, mapped_column
 
 from config import settings
 
@@ -17,6 +30,10 @@ async_session_maker = sessionmaker(engine, class_=AsyncSession, expire_on_commit
 
 
 def init_models():
+    """
+    Initializes the models for the application by importing them. This ensures that
+    all models are registered with SQLAlchemy and available for database operations.
+    """
     from app.booking.models import Bookings
     from app.hotels.models import Hotels
     from app.hotels.rooms.models import Rooms
@@ -24,4 +41,7 @@ def init_models():
 
 
 class Base(DeclarativeBase):
-    pass
+    __abstract__ = True
+
+    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+    modified_at: Mapped[datetime] = mapped_column(server_default=func.now(), onupdate=func.now())

@@ -1,3 +1,16 @@
+"""
+Celery Configuration and Initialization.
+
+This module configures and initializes the Celery application. The Celery app is used to handle
+asynchronous tasks in the project, with Redis as the message broker.
+
+Celery is set up based on the application environment, either using the test or production Redis
+instance, and is used for background tasks such as image processing and sending emails.
+
+Attributes:
+    celery (Celery): The Celery application instance.
+"""
+
 from celery import Celery
 
 from config import settings

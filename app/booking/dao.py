@@ -1,3 +1,11 @@
+"""
+Booking Data Access Object Module
+
+This module provides the BookingDAO class, which offers asynchronous methods
+for performing booking-related operations in the database, such as adding a new
+booking and retrieving all bookings for a specific user.
+"""
+
 from datetime import date
 
 from sqlalchemy import and_, func, insert, select
@@ -12,6 +20,12 @@ from app.logger import logger
 
 
 class BookingDAO(BaseDAO):
+    """
+    Data Access Object for Booking operations.
+
+    This class provides methods to interact with the bookings in the database,
+    including adding a new booking and retrieving booking information for users.
+    """
     model = Bookings
 
     @classmethod
@@ -21,18 +35,30 @@ class BookingDAO(BaseDAO):
         room_id: int,
         date_from: date,
         date_to: date,
-    ):
+    ) -> Bookings | None:
         """
-        WITH booked_rooms AS (
-            SELECT * FROM bookings
-            WHERE room_id = 1
-              AND date_from <= '2023-06-20'
-              AND date_to >=  '2023-05-15'
-        SELECT (rooms.quantity - count(booked_rooms.room_id)) AS free_rooms
-        FROM rooms LEFT JOIN booked_rooms
-        ON rooms.id = booked_rooms.room_id
-        WHERE rooms.id = 1
-        GROUP BY (rooms.quantity, booked_rooms.room_id)
+        Asynchronously adds a new booking for a specified room within a given date range.
+
+        The method checks room availability by determining the number of rooms already booked
+        for the specified period and comparing it against the total quantity available.
+        If at least one room is free, it retrieves the room's price, inserts a new booking
+        record into the database, commits the transaction, and returns the created booking.
+        In case no rooms are available or if an exception occurs during the process, it logs
+        the error details and returns None.
+
+        Args:
+            user_id (int): The identifier of the user making the booking.
+            room_id (int): The identifier of the room to be booked.
+            date_from (date): The starting date of the booking period.
+            date_to (date): The ending date of the booking period.
+
+        Returns:
+            Bookings: The newly created booking object if the booking is successful.
+            None: otherwise.
+
+        Note:
+            Exceptions such as SQLAlchemyError and other general exceptions are caught and logged.
+            The function does not propagate these exceptions further.
         """
         try:
             booked_rooms = (
@@ -104,6 +130,20 @@ class BookingDAO(BaseDAO):
         cls,
         user_id: int,
     ) -> list[BookingsInfoSchema]:
+        """
+        Asynchronously retrieves all bookings for the specified user.
+
+        This method queries the database to fetch booking details for the given user_id.
+        It performs a join between the Bookings and Rooms tables to include related room
+        information such as image, name, description, and services. The results are returned
+        as a list of mappings that conform to the BookingsInfoSchema.
+
+        Args:
+            user_id (int): The identifier of the user whose bookings are to be retrieved.
+
+        Returns:
+            list[BookingsInfoSchema]: A list of booking records with associated room details.
+        """
         async with async_session_maker() as session:
             query_bookings = (
                 select(

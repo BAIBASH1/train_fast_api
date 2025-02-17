@@ -1,3 +1,16 @@
+"""
+Authentication and User Routes.
+
+This module defines the FastAPI routes for user authentication, including login,
+registration, and user profile management. It supports JWT token authentication for user login.
+
+Endpoints:
+    - login_user: Authenticates a user and returns an access token.
+    - register_user: Registers a new user and stores the user data.
+    - read_user: Retrieves the current authenticated user's information.
+    - logout_user: Logs the user out by deleting their access token.
+"""
+
 from fastapi import APIRouter, Depends, Response
 
 from app.exceptions import IncorrectEmailOrPasswordException, UserAlreadyExistException
@@ -12,6 +25,16 @@ router = APIRouter(prefix="/auth", tags=["Auth & Пользователи"])
 
 @router.post("/login")
 async def login_user(response: Response, user_data: UsersAuthSchema):
+    """
+    Logs in a user and provides a JWT access token.
+
+    Args:
+        response (Response): The HTTP response where the token will be set as a cookie.
+        user_data (UsersAuthSchema): The user's login credentials.
+
+    Returns:
+        str: The generated JWT access token.
+    """
     user = await authenticate_user(user_data.email, user_data.password)
     if not user:
         raise IncorrectEmailOrPasswordException
@@ -23,6 +46,15 @@ async def login_user(response: Response, user_data: UsersAuthSchema):
 
 @router.post("/register")
 async def register_user(user_data: UsersAuthSchema):
+    """
+    Registers a new user and stores their data.
+
+    Args:
+        user_data (UsersAuthSchema): The user's registration information.
+
+    Returns:
+        int: The ID of the newly registered user.
+    """
     existing_user = await UsersDAO.find_one_or_none(email=user_data.email)
     if existing_user:
         raise UserAlreadyExistException
@@ -33,9 +65,24 @@ async def register_user(user_data: UsersAuthSchema):
 
 @router.get("/me")
 async def read_user(current_user: Users = Depends(get_current_user)):
+    """
+    Retrieves the current authenticated user's information.
+
+    Args:
+        current_user (Users): The current authenticated user.
+
+    Returns:
+        Users: The user's data.
+    """
     return current_user
 
 
 @router.post("/logout")
 async def logout_user(response: Response):
+    """
+    Logs the user out by deleting their access token.
+
+    Args:
+        response (Response): The HTTP response from which the cookie will be deleted.
+    """
     response.delete_cookie("booking_access_token")
