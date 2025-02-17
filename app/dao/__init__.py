@@ -7,7 +7,8 @@ class includes methods for querying and manipulating data such as finding record
 inserting new records, updating existing records, and deleting records.
 
 Modules:
-    - BaseDAO: The base class for data access operations, providing common methods for database interaction.
+    - BaseDAO: The base class for data access operations, providing common methods for database
+     interaction.
 """
 
 from app.dao.base import BaseDAO

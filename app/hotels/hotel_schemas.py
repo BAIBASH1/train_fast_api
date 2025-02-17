@@ -1,11 +1,12 @@
 """
 Schemas for Hotel Data.
 
-This module defines Pydantic schemas used for validating and serializing hotel data. The `HotelsRoomsLeftSchema`
-represents detailed information about hotels, including room availability.
+This module defines Pydantic schemas used for validating and serializing hotel data. The
+`HotelsRoomsLeftSchema` represents detailed information about hotels, including room availability.
 
 Schemas:
-    - HotelsRoomsLeftSchema: Represents detailed information about a hotel, including its available rooms.
+    - HotelsRoomsLeftSchema: Represents detailed information about a hotel, including its
+     available rooms.
 """
 
 from pydantic import BaseModel, Json

@@ -3,7 +3,8 @@ Hotels Data Access Object (DAO) for Hotel Management.
 
 This module defines the `HotelsDAO` class, which provides asynchronous methods for interacting
 with the `Hotels` model. The DAO contains functionality for querying hotels in a specific location,
-finding hotels with available rooms, and retrieving detailed room availability data for a given time period.
+finding hotels with available rooms, and retrieving detailed room availability data for a given
+time period.
 
 Methods:
     - find_all_in_location_with_rooms_left: Retrieves all hotels in a location with available rooms
@@ -27,8 +28,8 @@ class HotelsDAO(BaseDAO):
     """
     Data Access Object (DAO) for interacting with the Hotels model.
 
-    This class provides methods to query and retrieve hotel information, including hotels in specific
-    locations with available rooms and room availability for specified date ranges.
+    This class provides methods to query and retrieve hotel information, including hotels in
+    specific locations with available rooms and room availability for specified date ranges.
     """
 
     model = Hotels
@@ -41,7 +42,8 @@ class HotelsDAO(BaseDAO):
         date_to: date,
     ) -> list[HotelsRoomsLeftSchema]:
         """
-        Asynchronously retrieves all hotels in a specified location with available rooms for a given date range.
+        Asynchronously retrieves all hotels in a specified location with available rooms for a
+        given date range.
 
         Args:
             location (str): The location to search for hotels.
@@ -49,7 +51,8 @@ class HotelsDAO(BaseDAO):
             date_to (date): The end date of the booking period.
 
         Returns:
-            list[HotelsRoomsLeftSchema]: A list of hotels in the specified location with available rooms.
+            list[HotelsRoomsLeftSchema]: A list of hotels in the specified location with
+             available rooms.
         """
         busy_rooms = (
             select(

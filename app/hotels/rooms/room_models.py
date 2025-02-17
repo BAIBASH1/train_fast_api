@@ -2,8 +2,8 @@
 Rooms Model.
 
 This module defines the `Rooms` model, which represents rooms table in database.
-Each room is associated with a specific hotel and contains information such as room name, description,
-price, services, and quantity.
+Each room is associated with a specific hotel and contains information such as
+room name, description, price, services, and quantity.
 """
 
 from sqlalchemy import JSON, ForeignKey
@@ -17,8 +17,8 @@ class Rooms(Base):
     Represents a hotel room in the system.
 
     This class defines the structure of the `rooms` table.
-    Each room is associated with a specific hotel and contains information such as room name, description,
-    price, services, and quantity.
+    Each room is associated with a specific hotel and contains information such as
+    room name, description, price, services, and quantity.
 
     Attributes:
         - id: The unique identifier for the room.

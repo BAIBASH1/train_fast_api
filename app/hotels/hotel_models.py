@@ -1,9 +1,9 @@
 """
 Hotels Model.
 
-This module defines the `Hotels` model, which represents hotels in the database. Each hotel contains
-information such as name, location, services, room quantity, and associated rooms. The model supports
-relationships with rooms and bookings.
+This module defines the `Hotels` model, which represents hotels in the database. Each hotel
+contains information such as name, location, services, room quantity, and associated rooms.
+The model supports relationships with rooms and bookings.
 """
 
 from sqlalchemy.dialects.postgresql import JSONB
@@ -17,8 +17,8 @@ class Hotels(Base):
     Hotels Model.
 
     This model represent hotels in the database. Each hotel contains
-    information such as name, location, services, room quantity, and associated rooms. The model supports
-    relationships with rooms and bookings.
+    information such as name, location, services, room quantity, and associated rooms. The model
+    supports relationships with rooms and bookings.
 
     Attributes:
         - id: The unique identifier for the hotel.

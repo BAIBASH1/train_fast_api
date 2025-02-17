@@ -3,12 +3,13 @@ Hotel API Router.
 
 This module defines the FastAPI router for interacting with hotel data. It includes endpoints
 for retrieving hotel information, querying hotels by location, and checking room availability.
-It leverages the `HotelsDAO` class to interact with the database and return the relevant hotel data.
+It leverages the `HotelsDAO` class to interact with the database and return the relevant hotel
+data.
 
 Endpoints:
     - get_hotel: Retrieves detailed information about a specific hotel by its ID.
-    - get_hotels_by_location_and_time: Retrieves hotels in a specific location with available rooms
-      for a given date range.
+    - get_hotels_by_location_and_time: Retrieves hotels in a specific location with available
+     rooms for a given date range.
 """
 
 from datetime import date
@@ -45,7 +46,8 @@ async def get_hotels_by_location_and_time(
     location: str, date_from: date, date_to: date
 ) -> list[HotelsRoomsLeftSchema]:
     """
-    Asynchronously retrieves hotels in a specified location with available rooms for a given date range.
+    Asynchronously retrieves hotels in a specified location with available rooms for a given date
+    range.
 
     Args:
         location (str): The location to search for hotels.
@@ -53,7 +55,8 @@ async def get_hotels_by_location_and_time(
         date_to (date): The end date of the booking period.
 
     Returns:
-        list[HotelsRoomsLeftSchema]: A list of hotels with available rooms in the specified location.
+        list[HotelsRoomsLeftSchema]: A list of hotels with available rooms in the specified
+         location.
     """
     from app.hotels.hotel_dao import HotelsDAO
 

@@ -6,7 +6,8 @@ It includes a schema for room details, which contains the necessary fields for r
 room information in API responses.
 
 Schemas:
-    - HotelRoomsSchema: Represents detailed information about a room in a hotel, including its availability.
+    - HotelRoomsSchema: Represents detailed information about a room in a hotel, including its
+     availability.
 """
 
 from pydantic import BaseModel

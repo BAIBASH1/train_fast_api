@@ -2,8 +2,8 @@
 Rooms API Router.
 
 This module defines the FastAPI router for interacting with hotel room data. It includes endpoints
-for retrieving available rooms in a hotel based on specific dates. The router leverages the `RoomsDAO`
-to interact with the database and return the relevant room data.
+for retrieving available rooms in a hotel based on specific dates. The router leverages the
+`RoomsDAO` to interact with the database and return the relevant room data.
 
 Endpoints:
     - get_hotel_rooms: Retrieves available rooms for a specified hotel and date range.

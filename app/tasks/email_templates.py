@@ -6,7 +6,8 @@ for confirming bookings. The templates use HTML formatting for the email body an
 to be sent via the email server specified in the application settings.
 
 Functions:
-    - create_bookings_confirmation_template: Creates an HTML email template for booking confirmation.
+    - create_bookings_confirmation_template: Creates an HTML email template for
+     booking confirmation.
 """
 
 from email.message import EmailMessage

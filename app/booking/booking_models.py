@@ -19,8 +19,8 @@ class Bookings(Base):
     Represents a booking in the system.
 
     This class defines the structure of the `bookings` table, which stores the information
-    about each booking, including the room, user, dates, price, and the computed total cost and days.
-    It also defines relationships to the `Users` and `Rooms` models.
+    about each booking, including the room, user, dates, price, and the computed total cost
+    and days. It also defines relationships to the `Users` and `Rooms` models.
 
     Attributes:
         id (int): The unique identifier for the booking.
@@ -29,8 +29,10 @@ class Bookings(Base):
         date_from (date): The start date of the booking.
         date_to (date): The end date of the booking.
         price (int): The price per night for the room.
-        total_cost (int): The total cost of the booking, computed as (date_to - date_from) * price.
-        total_days (int): The total number of days for the booking, computed as (date_to - date_from).
+        total_cost (int): The total cost of the booking, computed as
+         (date_to - date_from) * price.
+        total_days (int): The total number of days for the booking, computed as
+         (date_to - date_from).
         user (Users): The user who made the booking (relationship).
         room (Rooms): The room that is being booked (relationship).
     """

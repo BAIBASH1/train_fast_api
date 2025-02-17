@@ -1,8 +1,8 @@
 """
 Authentication Utilities.
 
-This module provides utility functions for user authentication, including the creation of access tokens,
-password hashing and verification, and user authentication.
+This module provides utility functions for user authentication, including the creation of
+access tokens, password hashing and verification, and user authentication.
 
 Functions:
     - create_access_token: Generates a JWT access token for a user.

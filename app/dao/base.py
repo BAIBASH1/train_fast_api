@@ -26,7 +26,8 @@ class BaseDAO:
         - delete: Delete records based on specified filter criteria.
 
     Attributes:
-        model (Base): The SQLAlchemy model class that this DAO operates on. It should be set by the subclass.
+        model (Base): The SQLAlchemy model class that this DAO operates on. It should be set by
+         the subclass.
     """
 
     model = None

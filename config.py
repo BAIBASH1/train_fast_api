@@ -18,9 +18,10 @@ class Settings(BaseSettings):
     """
     A class that holds the application's configuration settings.
 
-    This class uses Pydantic's `BaseSettings` to load configuration values from environment variables,
-    with a `.env` file for development and testing purposes. It includes properties for database URLs,
-    SMTP configuration, Redis, and other external services required by the application.
+    This class uses Pydantic's `BaseSettings` to load configuration values from environment
+    variables, with a `.env` file for development and testing purposes. It includes properties
+    for database URLs, SMTP configuration, Redis, and other external services
+    required by the application.
 
     Attributes:
         MODE (Literal["DEV", "PROD", "TEST"]): The environment mode of the application.
@@ -53,18 +54,19 @@ class Settings(BaseSettings):
 
     SECRET_KEY_FOR_HASH: str
     ALGORITHM_FOR_HASH: str
-
     SENTRY_LINK: str
 
     @property
     def DATABASE_URL(self) -> str:
         """
-        Generates the database URL for connecting to the production PostgreSQL database.
+        Generates the database URL for connecting to the PostgreSQL database.
 
         Returns:
             str: The PostgreSQL database connection string.
         """
-        return f"postgresql+asyncpg://{self.DB_USER}:{self.DB_PASS}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+        db_creds = f'{self.DB_USER}:{self.DB_PASS}'
+        db_address = f'{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}'
+        return f"postgresql+asyncpg://{db_creds}@{db_address}"
 
     TEST_DB_HOST: str
     TEST_DB_PORT: int
@@ -88,7 +90,9 @@ class Settings(BaseSettings):
         Returns:
            str: The PostgreSQL test database connection string.
         """
-        return f"postgresql+asyncpg://{self.TEST_DB_USER}:{self.TEST_DB_PASS}@{self.TEST_DB_HOST}:{self.TEST_DB_PORT}/{self.TEST_DB_NAME}"
+        test_db_creds = f'{self.TEST_DB_USER}:{self.TEST_DB_PASS}'
+        test_db_address = f'{self.TEST_DB_HOST}:{self.TEST_DB_PORT}/{self.TEST_DB_NAME}'
+        return f"postgresql+asyncpg://{test_db_creds}@{test_db_address}"
 
     class Config:
         env_file = ".env"
