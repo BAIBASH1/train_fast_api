@@ -41,9 +41,9 @@ def proceed_picture(
         path (str): The file path of the image to be processed.
     """
     im_path = Path(path)
-    im = Image.open(im_path)
-    im_resized_1000_500 = im.resize((MEDIUM_IMAGE_WIDTH, MEDIUM_IMAGE_HEIGHT))
-    im_resized_200_100 = im.resize((SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT))
+    im_to_proceed = Image.open(im_path)
+    im_resized_1000_500 = im_to_proceed.resize((MEDIUM_IMAGE_WIDTH, MEDIUM_IMAGE_HEIGHT))
+    im_resized_200_100 = im_to_proceed.resize((SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT))
     im_resized_1000_500.save(
         f"app/static/images/resized_1000_500_{im_path.name}"
     )

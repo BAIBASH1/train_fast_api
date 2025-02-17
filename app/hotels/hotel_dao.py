@@ -91,6 +91,6 @@ class HotelsDAO(BaseDAO):
         )
 
         async with async_session_maker() as session:
-            res = await session.execute(hotels_in_location)
-            hotels_rooms = res.mappings().all()
+            hotels_rooms = await session.execute(hotels_in_location)
+            hotels_rooms = hotels_rooms.mappings().all()
             return hotels_rooms

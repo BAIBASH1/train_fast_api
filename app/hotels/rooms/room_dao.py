@@ -63,7 +63,7 @@ class RoomsDAO(BaseDAO):
             .cte()
         )
 
-        hotel_rooms = (
+        hotel_rooms_stmt = (
             select(
                 Rooms.id,
                 Rooms.hotel_id,
@@ -93,6 +93,6 @@ class RoomsDAO(BaseDAO):
         )
 
         async with async_session_maker() as session:
-            res = await session.execute(hotel_rooms)
-            hotel_rooms = res.mappings().all()
+            hotel_rooms = await session.execute(hotel_rooms_stmt)
+            hotel_rooms = hotel_rooms.mappings().all()
             return hotel_rooms
