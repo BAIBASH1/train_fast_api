@@ -14,3 +14,44 @@ imports = ["sqlalchemy", "app"]
 
 [tool.pyright]
 include = ["app"]
+
+[tool.poetry]
+name = "fastapi_project"
+version = "0.1.0"
+description = ""
+authors = ["BAIBASH1 <gazinyr2014@mail.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+alembic = "1.13.1"
+asyncpg = "0.30.0"
+bcrypt = "4.2.1"
+black = "25.1.0"
+celery = "5.4.0"
+isort = "6.0.0"
+fastapi = "0.115.8"
+fastapi-cache2 = {version = "0.2.2", extras = ["redis"]}
+fastapi-versioning = "0.10.0"
+flake8 = "7.1.1"
+flower = "2.0.1"
+gunicorn = "23.0.0"
+httpx = "0.28.1"
+passlib = "1.7.4"
+pillow = "11.1.0"
+prometheus-fastapi-instrumentator = "7.0.2"
+pydantic = {version = "2.10.6", extras = ["email"]}
+pydantic-settings = "2.7.1"
+pytest = "8.3.4"
+pytest-asyncio = "0.25.3"
+python-jose = "3.3.0"
+python-json-logger = "3.2.1"
+redis = "4.6.0"
+sentry-sdk = "2.20.0"
+sqladmin = "0.20.1"
+sqlalchemy = "2.0.36"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
