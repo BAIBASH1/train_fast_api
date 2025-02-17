@@ -1,82 +1,28 @@
-import sys
-from time import time
+from fastapi import FastAPI
 
-import sentry_sdk
-from fastapi import FastAPI, Request
-from fastapi.staticfiles import StaticFiles
-from fastapi_cache import FastAPICache
-from fastapi_cache.backends.redis import RedisBackend
-from fastapi_versioning import VersionedFastAPI
-from prometheus_fastapi_instrumentator import Instrumentator
-from redis import asyncio as aioredis
-from sqladmin import Admin
-
-from app.admin.view import BookingsAdmin, HotelsAdmin, RoomsAdmin, UserAdmin
-from app.booking.booking_router import router as router_bookings
-from app.database import engine
-from app.hotels.rooms.room_router import router as router_hotels_rooms
-from app.images.images_router import router as router_images
-from app.logger import logger
-from app.pages.pages_router import router as router_page
-from app.users.user_router import router as router_users
-from config import settings
+from app.app_components.admin import setup_admin_panel
+from app.app_components.instrumentation import setup_instrumentation
+from app.app_components.middleware import setup_middleware
+from app.app_components.redis_cache import init_cache
+from app.app_components.routes import include_routers
+from app.app_components.sentry import init_sentry
 
 app = FastAPI()
 
-sentry_sdk.init(
-    dsn=settings.SENTRY_LINK,
-    traces_sample_rate=1.0,
-)
+# Инициализация Sentry
+init_sentry()
 
+# Инициализация кэша
+init_cache()
 
-app.include_router(router_users)
-app.include_router(router_bookings)
-app.include_router(router_hotels_rooms)
-app.include_router(router_page)
-app.include_router(router_images)
+# Настройка мидлвари
+setup_middleware(app)
 
+# Добавление роутеров
+include_routers(app)
 
-@app.on_event("startup")
-async def startup():
-    redis = aioredis.from_url(
-        f"redis://{settings.REDIS_HOST}:{settings.REDIS_PORT}",
-        encoding="utf-8",
-        decode_responses=True,
-    )
-    FastAPICache.init(RedisBackend(redis), prefix="/cache")
+# Настройка инструментирования
+setup_instrumentation(app)
 
-
-@app.middleware("http")
-async def record_process_time(request: Request, call_next):
-    start_time = time()
-    response = await call_next(request)
-    logger.info(
-        "Request execution time",
-        extra={"process_time": round(time() - start_time, 3)},
-    )
-    return response
-
-
-app = VersionedFastAPI(
-    app,
-    version_format="{major}",
-    prefix_format="/v{major}",
-    description="Greet users with a nice message",
-)
-
-app.mount(
-    path="/static", app=StaticFiles(directory="app/static"), name="static"
-)
-
-instrumentor = Instrumentator(
-    should_group_status_codes=False,
-    excluded_handlers=[".*admin.*", "/metrics"],
-)
-
-instrumentor.instrument(app).expose(app)
-
-admin = Admin(app, engine)
-admin.add_view(BookingsAdmin)
-admin.add_view(UserAdmin)
-admin.add_view(HotelsAdmin)
-admin.add_view(RoomsAdmin)
+# Настройка административной панели
+setup_admin_panel(app)

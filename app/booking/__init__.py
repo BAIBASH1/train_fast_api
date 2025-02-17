@@ -14,10 +14,10 @@ Modules:
 The package facilitates the full lifecycle of booking management from database operations to API interaction.
 """
 
-from .booking_dao import BookingDAO
-from .booking_models import Bookings
-from .booking_router import router
-from .booking_schemas import BookingsInfoSchema, BookingsSchema
+from app.booking.booking_dao import BookingDAO
+from app.booking.booking_models import Bookings
+from app.booking.booking_router import router
+from app.booking.booking_schemas import BookingsInfoSchema, BookingsSchema
 
 __all__ = [
     "BookingDAO",

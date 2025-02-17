@@ -17,7 +17,6 @@ from fastapi import APIRouter
 from fastapi_cache.decorator import cache
 
 from app.exceptions import DateToEarlierThanDateFrom, LargeIntervalBetweenDates
-from app.hotels.hotel_dao import HotelsDAO
 from app.hotels.hotel_schemas import HotelsRoomsLeftSchema
 
 router = APIRouter(prefix="/hotels", tags=["Отели"])
@@ -34,6 +33,8 @@ async def get_hotel(hotel_id: int):
     Returns:
         dict: The hotel information as a dictionary.
     """
+    from app.hotels.hotel_dao import HotelsDAO
+
     hotel_inf = await HotelsDAO.find_by_id(hotel_id)
     return hotel_inf
 
