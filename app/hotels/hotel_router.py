@@ -55,6 +55,8 @@ async def get_hotels_by_location_and_time(
     Returns:
         list[HotelsRoomsLeftSchema]: A list of hotels with available rooms in the specified location.
     """
+    from app.hotels.hotel_dao import HotelsDAO
+
     if date_from > date_to:
         raise DateToEarlierThanDateFrom
     if (date_to - date_from).days > 30:
