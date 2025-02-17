@@ -11,6 +11,7 @@ Classes:
     - HotelsAdmin: Admin view for managing hotels.
     - RoomsAdmin: Admin view for managing rooms.
 """
+
 from sqladmin import ModelView
 
 from app.booking.booking_models import Bookings
@@ -21,27 +22,31 @@ from app.users.user_models import Users
 
 class BookingsAdmin(ModelView, model=Bookings):
     """
-       Admin view for managing bookings.
+    Admin view for managing bookings.
     """
+
     column_list = [c.name for c in Bookings.__table__.c]
 
 
 class UserAdmin(ModelView, model=Users):
     """
-       Admin view for managing users.
+    Admin view for managing users.
     """
+
     column_list = [Users.id, Users.email]
 
 
 class HotelsAdmin(ModelView, model=Hotels):
     """
-       Admin view for managing hotels.
+    Admin view for managing hotels.
     """
+
     column_list = [c.name for c in Hotels.__table__.c]
 
 
 class RoomsAdmin(ModelView, model=Rooms):
     """
-       Admin view for managing rooms.
+    Admin view for managing rooms.
     """
+
     column_list = [c.name for c in Rooms.__table__.c]

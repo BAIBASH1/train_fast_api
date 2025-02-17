@@ -13,8 +13,15 @@ Endpoints:
 
 from fastapi import APIRouter, Depends, Response
 
-from app.exceptions import IncorrectEmailOrPasswordException, UserAlreadyExistException
-from app.users.auth import authenticate_user, create_access_token, get_password_hash
+from app.exceptions import (
+    IncorrectEmailOrPasswordException,
+    UserAlreadyExistException,
+)
+from app.users.auth import (
+    authenticate_user,
+    create_access_token,
+    get_password_hash,
+)
 from app.users.user_dao import UsersDAO
 from app.users.user_dependencies import get_current_user
 from app.users.user_models import Users
@@ -59,7 +66,9 @@ async def register_user(user_data: UsersAuthSchema):
     if existing_user:
         raise UserAlreadyExistException
     hashed_password = get_password_hash(user_data.password)
-    user_id = await UsersDAO.add(email=user_data.email, hashed_password=hashed_password)
+    user_id = await UsersDAO.add(
+        email=user_data.email, hashed_password=hashed_password
+    )
     return user_id
 
 

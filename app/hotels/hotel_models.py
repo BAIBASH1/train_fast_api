@@ -29,6 +29,7 @@ class Hotels(Base):
         - image_id: The ID of the image associated with the hotel.
         - rooms: The relationship to the `Rooms` model, representing the rooms in the hotel.
     """
+
     __tablename__ = "hotels"
 
     id: Mapped[int] = mapped_column(primary_key=True)

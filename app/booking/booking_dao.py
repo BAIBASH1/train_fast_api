@@ -26,6 +26,7 @@ class BookingDAO(BaseDAO):
     This class provides methods to interact with the bookings in the database,
     including adding a new booking and retrieving booking information for users.
     """
+
     model = Bookings
 
     @classmethod
@@ -75,12 +76,16 @@ class BookingDAO(BaseDAO):
 
             query_rooms_left = (
                 select(
-                    (Rooms.quantity - func.count(booked_rooms.c.room_id)).label(
-                        "rooms_left"
-                    )
+                    (
+                        Rooms.quantity - func.count(booked_rooms.c.room_id)
+                    ).label("rooms_left")
                 )
                 .select_from(Rooms)
-                .join(booked_rooms, Rooms.id == booked_rooms.c.room_id, isouter=True)
+                .join(
+                    booked_rooms,
+                    Rooms.id == booked_rooms.c.room_id,
+                    isouter=True,
+                )
                 .where(room_id == Rooms.id)
                 .group_by(Rooms.quantity, booked_rooms.c.room_id)
             )

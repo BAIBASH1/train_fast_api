@@ -33,6 +33,7 @@ class Settings(BaseSettings):
         ALGORITHM_FOR_HASH (str): The algorithm used for hashing tokens and passwords.
         SENTRY_LINK (str): The Sentry link for error tracking.
     """
+
     MODE: Literal["DEV", "PROD", "TEST"]
     LOG_LEVEL: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
 

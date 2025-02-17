@@ -14,4 +14,9 @@ from .celery import celery
 from .email_templates import create_bookings_confirmation_template
 from .tasks import proceed_picture, send_bookings_confirmation_email
 
-__all__ = ["celery", "create_bookings_confirmation_template", "proceed_picture", "send_bookings_confirmation_email"]
+__all__ = [
+    "celery",
+    "create_bookings_confirmation_template",
+    "proceed_picture",
+    "send_bookings_confirmation_email",
+]

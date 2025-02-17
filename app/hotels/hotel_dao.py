@@ -30,6 +30,7 @@ class HotelsDAO(BaseDAO):
     This class provides methods to query and retrieve hotel information, including hotels in specific
     locations with available rooms and room availability for specified date ranges.
     """
+
     model = Hotels
 
     @classmethod
@@ -52,11 +53,17 @@ class HotelsDAO(BaseDAO):
         """
         busy_rooms = (
             select(
-                Rooms.hotel_id.label("hotel_id"), count(Bookings.id).label("non_left")
+                Rooms.hotel_id.label("hotel_id"),
+                count(Bookings.id).label("non_left"),
             )
             .select_from(Bookings)
             .join(Rooms, Rooms.id == Bookings.room_id, isouter=True)
-            .where(and_(Bookings.date_from <= date_to, Bookings.date_to >= date_from))
+            .where(
+                and_(
+                    Bookings.date_from <= date_to,
+                    Bookings.date_to >= date_from,
+                )
+            )
             .group_by(Rooms.hotel_id)
             .cte("busy_rooms")
         )
@@ -64,16 +71,20 @@ class HotelsDAO(BaseDAO):
         hotels_in_location = (
             select(
                 Hotels.__table__.columns,
-                (Hotels.rooms_quantity - func.coalesce(busy_rooms.c.non_left, 0)).label(
-                    "rooms_left"
-                ),
+                (
+                    Hotels.rooms_quantity
+                    - func.coalesce(busy_rooms.c.non_left, 0)
+                ).label("rooms_left"),
             )
             .select_from(Hotels)
             .join(busy_rooms, Hotels.id == busy_rooms.c.hotel_id, isouter=True)
             .where(
                 and_(
                     Hotels.location.like(f"%{location}%"),
-                    (Hotels.rooms_quantity - func.coalesce(busy_rooms.c.non_left, 0))
+                    (
+                        Hotels.rooms_quantity
+                        - func.coalesce(busy_rooms.c.non_left, 0)
+                    )
                     > 0,
                 )
             )

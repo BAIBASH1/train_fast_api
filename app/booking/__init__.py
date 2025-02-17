@@ -24,5 +24,5 @@ __all__ = [
     "Bookings",
     "BookingsSchema",
     "BookingsInfoSchema",
-    "router"
+    "router",
 ]

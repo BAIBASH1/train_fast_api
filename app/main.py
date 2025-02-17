@@ -51,9 +51,11 @@ async def record_process_time(request: Request, call_next):
     start_time = time()
     response = await call_next(request)
     logger.info(
-        "Request execution time", extra={"process_time": round(time() - start_time, 3)}
+        "Request execution time",
+        extra={"process_time": round(time() - start_time, 3)},
     )
     return response
+
 
 app = VersionedFastAPI(
     app,
@@ -62,7 +64,9 @@ app = VersionedFastAPI(
     description="Greet users with a nice message",
 )
 
-app.mount(path="/static", app=StaticFiles(directory="app/static"), name="static")
+app.mount(
+    path="/static", app=StaticFiles(directory="app/static"), name="static"
+)
 
 instrumentor = Instrumentator(
     should_group_status_codes=False,

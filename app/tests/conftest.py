@@ -24,7 +24,9 @@ async def prepare_database():
     assert settings.MODE == "TEST"
 
     async with engine.begin() as connection:
-        await connection.run_sync(lambda connection: Base.metadata.drop_all(connection))
+        await connection.run_sync(
+            lambda connection: Base.metadata.drop_all(connection)
+        )
         await connection.run_sync(
             lambda connection: Base.metadata.create_all(connection)
         )
@@ -41,7 +43,9 @@ async def prepare_database():
     users = open_mock_csv("users")
     bookings = open_mock_csv("bookings")
     for booking in bookings:
-        booking["date_from"] = datetime.strptime(booking["date_from"], "%Y-%m-%d")
+        booking["date_from"] = datetime.strptime(
+            booking["date_from"], "%Y-%m-%d"
+        )
         booking["date_to"] = datetime.strptime(booking["date_to"], "%Y-%m-%d")
 
     async with async_session_maker() as session:

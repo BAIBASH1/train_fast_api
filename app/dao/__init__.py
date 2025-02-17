@@ -9,6 +9,7 @@ inserting new records, updating existing records, and deleting records.
 Modules:
     - BaseDAO: The base class for data access operations, providing common methods for database interaction.
 """
+
 from app.dao.base import BaseDAO
 
 __all__ = ["BaseDAO"]

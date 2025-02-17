@@ -17,5 +17,6 @@ class UsersAuthSchema(BaseModel):
 
     This schema is used to validate the data for user login and registration.
     """
+
     email: EmailStr
     password: str

@@ -34,6 +34,7 @@ class Bookings(Base):
         user (Users): The user who made the booking (relationship).
         room (Rooms): The room that is being booked (relationship).
     """
+
     __tablename__ = "bookings"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -42,7 +43,9 @@ class Bookings(Base):
     date_from: Mapped[date] = mapped_column(nullable=False)
     date_to: Mapped[date] = mapped_column(nullable=False)
     price: Mapped[int]
-    total_cost: Mapped[int] = mapped_column(Computed("(date_to - date_from) * price"))
+    total_cost: Mapped[int] = mapped_column(
+        Computed("(date_to - date_from) * price")
+    )
     total_days: Mapped[int] = mapped_column(Computed("(date_to - date_from)"))
 
     user: Mapped["Users"] = relationship(

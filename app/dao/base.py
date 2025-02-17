@@ -28,6 +28,7 @@ class BaseDAO:
     Attributes:
         model (Base): The SQLAlchemy model class that this DAO operates on. It should be set by the subclass.
     """
+
     model = None
 
     @classmethod
@@ -108,7 +109,9 @@ class BaseDAO:
             dict | None: The deleted record as a dictionary, or None if no record was found.
         """
         async with async_session_maker() as session:
-            query = delete(cls.model).filter_by(**filter_by).returning(cls.model)
+            query = (
+                delete(cls.model).filter_by(**filter_by).returning(cls.model)
+            )
             result = await session.execute(query)
             await session.commit()
             deleted = result.scalars().one_or_none()

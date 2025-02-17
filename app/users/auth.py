@@ -11,7 +11,6 @@ Functions:
     - authenticate_user: Authenticates a user based on email and password.
 """
 
-
 from datetime import datetime, timedelta
 
 from jose import jwt
@@ -83,5 +82,7 @@ async def authenticate_user(email: EmailStr, password: str):
         user: The authenticated user object if successful, otherwise None.
     """
     user = await UsersDAO.find_one_or_none(email=email)
-    if user and verify_password(password, hashed_password=user.hashed_password):
+    if user and verify_password(
+        password, hashed_password=user.hashed_password
+    ):
         return user

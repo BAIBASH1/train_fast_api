@@ -41,7 +41,9 @@ async def test_register_user(
         ("seconduser@user.ru", "seconduser2", 401),
     ],
 )
-async def test_login_user(ac: AsyncClient, email: str, password: str, status_code: int):
+async def test_login_user(
+    ac: AsyncClient, email: str, password: str, status_code: int
+):
     response = await ac.post(
         "/v1/auth/login", json={"email": email, "password": password}
     )

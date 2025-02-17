@@ -32,10 +32,13 @@ class Rooms(Base):
         - bookings: The relationship to the `Bookings` model.
         - hotel: The relationship to the `Hotels` model.
     """
+
     __tablename__ = "rooms"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    hotel_id: Mapped[int] = mapped_column(ForeignKey("hotels.id"), nullable=False)
+    hotel_id: Mapped[int] = mapped_column(
+        ForeignKey("hotels.id"), nullable=False
+    )
     name: Mapped[str] = mapped_column(nullable=False)
     description: Mapped[str]
     price: Mapped[int] = mapped_column(nullable=False)

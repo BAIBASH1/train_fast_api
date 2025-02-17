@@ -18,6 +18,7 @@ class BookingsSchema(BaseModel):
     This schema is used for creating and updating bookings in the system. It includes all the
     necessary fields to represent a booking, including the room, user, dates, and pricing information.
     """
+
     id: int
     room_id: int
     user_id: int
@@ -35,6 +36,7 @@ class BookingsInfoSchema(BaseModel):
     This schema is used for providing detailed information about a booking, including the room's
     image, name, description, and services, in addition to the basic booking data like dates and pricing.
     """
+
     room_id: int
     user_id: int
     date_from: date

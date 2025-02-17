@@ -27,6 +27,7 @@ class HotelsRoomsLeftSchema(BaseModel):
         image_id (int): The ID associated with the hotel's image.
         rooms_left (int): The number of available rooms in the hotel for the specified period.
     """
+
     id: int
     name: str
     location: str

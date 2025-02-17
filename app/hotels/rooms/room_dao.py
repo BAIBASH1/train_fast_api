@@ -30,6 +30,7 @@ class RoomsDAO(BaseDAO):
     for a specified date range and hotel. The `RoomsDAO` class inherits from `BaseDAO` and is
     responsible for retrieving room data, availability, and related hotel information.
     """
+
     model = Rooms
 
     @classmethod
@@ -49,9 +50,15 @@ class RoomsDAO(BaseDAO):
         """
         bookings_in_dates = (
             select(
-                Bookings.room_id.label("room_id"), count(Bookings.id).label("non_left")
+                Bookings.room_id.label("room_id"),
+                count(Bookings.id).label("non_left"),
             )
-            .where(and_(Bookings.date_from <= date_to, Bookings.date_to >= date_from))
+            .where(
+                and_(
+                    Bookings.date_from <= date_to,
+                    Bookings.date_to >= date_from,
+                )
+            )
             .group_by(Bookings.room_id)
             .cte()
         )
@@ -75,10 +82,14 @@ class RoomsDAO(BaseDAO):
             .select_from(Hotels)
             .join(Rooms, Hotels.id == Rooms.hotel_id, isouter=True)
             .join(
-                bookings_in_dates, bookings_in_dates.c.room_id == Rooms.id, isouter=True
+                bookings_in_dates,
+                bookings_in_dates.c.room_id == Rooms.id,
+                isouter=True,
             )
             .where(hotel_id == Hotels.id)
-            .group_by(Rooms.id, Hotels.rooms_quantity, bookings_in_dates.c.non_left)
+            .group_by(
+                Rooms.id, Hotels.rooms_quantity, bookings_in_dates.c.non_left
+            )
         )
 
         async with async_session_maker() as session:

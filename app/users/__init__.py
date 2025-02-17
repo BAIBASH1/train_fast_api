@@ -20,4 +20,13 @@ from .user_models import Users
 from .user_router import router
 from .user_schemas import UsersAuthSchema
 
-__all__ = ["authenticate_user", "create_access_token", "get_password_hash", "UsersDAO", "get_current_user", "Users", "router", "UsersAuthSchema"]
+__all__ = [
+    "authenticate_user",
+    "create_access_token",
+    "get_password_hash",
+    "UsersDAO",
+    "get_current_user",
+    "Users",
+    "router",
+    "UsersAuthSchema",
+]

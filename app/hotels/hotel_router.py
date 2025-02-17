@@ -10,6 +10,7 @@ Endpoints:
     - get_hotels_by_location_and_time: Retrieves hotels in a specific location with available rooms
       for a given date range.
 """
+
 from datetime import date
 
 from fastapi import APIRouter

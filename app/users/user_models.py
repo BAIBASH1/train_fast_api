@@ -24,6 +24,7 @@ class Users(Base):
         - hashed_password: The hashed password for user authentication.
         - bookings: A relationship to the `Bookings` model for tracking user bookings.
     """
+
     __tablename__ = "users"
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)

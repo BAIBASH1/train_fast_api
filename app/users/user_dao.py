@@ -11,4 +11,3 @@ from app.users.user_models import Users
 
 class UsersDAO(BaseDAO):
     model = Users
-

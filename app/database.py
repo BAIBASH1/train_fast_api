@@ -9,6 +9,7 @@ Attributes:
     async_session_maker (sessionmaker): The session maker for creating database sessions.
     engine (Engine): The SQLAlchemy engine used for interacting with the database.
 """
+
 from datetime import datetime
 
 from sqlalchemy import NullPool, func
@@ -26,7 +27,9 @@ else:
 
 engine = create_async_engine(DATABASE_URL, **DATABASE_PARAMS)
 
-async_session_maker = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
+async_session_maker = sessionmaker(
+    engine, class_=AsyncSession, expire_on_commit=False
+)
 
 
 def init_models():
@@ -44,4 +47,6 @@ class Base(DeclarativeBase):
     __abstract__ = True
 
     created_at: Mapped[datetime] = mapped_column(server_default=func.now())
-    modified_at: Mapped[datetime] = mapped_column(server_default=func.now(), onupdate=func.now())
+    modified_at: Mapped[datetime] = mapped_column(
+        server_default=func.now(), onupdate=func.now()
+    )

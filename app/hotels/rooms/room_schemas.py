@@ -19,6 +19,7 @@ class HotelRoomsSchema(BaseModel):
     This schema includes details about the room, such as its name, description, price, quantity,
     and the number of available rooms for a specific date range.
     """
+
     id: int
     hotel_id: int
     name: str
