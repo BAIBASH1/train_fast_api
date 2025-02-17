@@ -19,6 +19,12 @@ from app.tasks.celery import celery
 from app.tasks.email_templates import create_bookings_confirmation_template
 from config import settings
 
+MEDIUM_IMAGE_WIDTH = 1000
+MEDIUM_IMAGE_HEIGHT = 500
+
+SMALL_IMAGE_WIDTH = 200
+SMALL_IMAGE_HEIGHT = 100
+
 
 @celery.task
 def proceed_picture(
@@ -36,8 +42,8 @@ def proceed_picture(
     """
     im_path = Path(path)
     im = Image.open(im_path)
-    im_resized_1000_500 = im.resize((1000, 500))
-    im_resized_200_100 = im.resize((200, 100))
+    im_resized_1000_500 = im.resize((MEDIUM_IMAGE_WIDTH, MEDIUM_IMAGE_HEIGHT))
+    im_resized_200_100 = im.resize((SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT))
     im_resized_1000_500.save(
         f"app/static/images/resized_1000_500_{im_path.name}"
     )
