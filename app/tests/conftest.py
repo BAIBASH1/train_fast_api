@@ -7,13 +7,13 @@ import pytest
 from httpx import AsyncClient
 from sqlalchemy import insert
 
-from app.booking.models import Bookings
+from app.booking.booking_models import Bookings
 from app.database import Base, async_session_maker, engine, init_models
-from app.hotels.models import Hotels
-from app.hotels.rooms.models import Rooms
+from app.hotels.hotel_models import Hotels
+from app.hotels.rooms.room_models import Rooms
 from app.main import app as fastapi_app
 from app.main import startup
-from app.users.models import Users
+from app.users.user_models import Users
 from config import settings
 
 init_models()

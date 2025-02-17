@@ -18,7 +18,7 @@ from jose import jwt
 from passlib.context import CryptContext
 from pydantic import EmailStr
 
-from app.users.dao import UsersDAO
+from app.users.user_dao import UsersDAO
 from config import settings
 
 

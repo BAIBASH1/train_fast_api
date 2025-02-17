@@ -13,10 +13,10 @@ Classes:
 """
 from sqladmin import ModelView
 
-from app.booking.models import Bookings
-from app.hotels.models import Hotels
-from app.hotels.rooms.models import Rooms
-from app.users.models import Users
+from app.booking.booking_models import Bookings
+from app.hotels.hotel_models import Hotels
+from app.hotels.rooms.room_models import Rooms
+from app.users.user_models import Users
 
 
 class BookingsAdmin(ModelView, model=Bookings):

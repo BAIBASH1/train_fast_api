@@ -34,10 +34,10 @@ def init_models():
     Initializes the models for the application by importing them. This ensures that
     all models are registered with SQLAlchemy and available for database operations.
     """
-    from app.booking.models import Bookings
-    from app.hotels.models import Hotels
-    from app.hotels.rooms.models import Rooms
-    from app.users.models import Users
+    from app.booking.booking_models import Bookings
+    from app.hotels.hotel_models import Hotels
+    from app.hotels.rooms.room_models import Rooms
+    from app.users.user_models import Users
 
 
 class Base(DeclarativeBase):

@@ -14,10 +14,10 @@ Modules:
 """
 
 from .auth import authenticate_user, create_access_token, get_password_hash
-from .dao import UsersDAO
-from .dependencies import get_current_user
-from .models import Users
-from .router import router
-from .schemas import UsersAuthSchema
+from .user_dao import UsersDAO
+from .user_dependencies import get_current_user
+from .user_models import Users
+from .user_router import router
+from .user_schemas import UsersAuthSchema
 
 __all__ = ["authenticate_user", "create_access_token", "get_password_hash", "UsersDAO", "get_current_user", "Users", "router", "UsersAuthSchema"]

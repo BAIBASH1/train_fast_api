@@ -6,7 +6,7 @@ with the `Users` model, including checking user existence and performing databas
 """
 
 from app.dao.base import BaseDAO
-from app.users.models import Users
+from app.users.user_models import Users
 
 
 class UsersDAO(BaseDAO):

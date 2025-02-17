@@ -16,8 +16,8 @@ from fastapi import APIRouter
 from fastapi_cache.decorator import cache
 
 from app.exceptions import DateToEarlierThanDateFrom, LargeIntervalBetweenDates
-from app.hotels.dao import HotelsDAO
-from app.hotels.schemas import HotelsRoomsLeftSchema
+from app.hotels.hotel_dao import HotelsDAO
+from app.hotels.hotel_schemas import HotelsRoomsLeftSchema
 
 router = APIRouter(prefix="/hotels", tags=["Отели"])
 

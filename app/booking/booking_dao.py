@@ -11,11 +11,11 @@ from datetime import date
 from sqlalchemy import and_, func, insert, select
 from sqlalchemy.exc import SQLAlchemyError
 
-from app.booking.models import Bookings
-from app.booking.schemas import BookingsInfoSchema
+from app.booking.booking_models import Bookings
+from app.booking.booking_schemas import BookingsInfoSchema
 from app.dao.base import BaseDAO
 from app.database import async_session_maker
-from app.hotels.rooms.models import Rooms
+from app.hotels.rooms.room_models import Rooms
 from app.logger import logger
 
 

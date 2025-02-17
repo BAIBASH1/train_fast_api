@@ -9,6 +9,6 @@ Modules:
     - router: Defines the frontend routes for serving HTML pages, such as the hotels page.
 """
 
-from .router import router
+from .pages_router import router
 
 __all__ = ["router"]

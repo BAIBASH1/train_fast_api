@@ -21,8 +21,8 @@ from app.exceptions import (
     TokenExpiredException,
     UserIsNotPresentException,
 )
-from app.users.dao import UsersDAO
-from app.users.models import Users
+from app.users.user_dao import UsersDAO
+from app.users.user_models import Users
 from config import settings
 
 

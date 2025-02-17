@@ -14,12 +14,12 @@ from datetime import date
 from sqlalchemy import and_, func, select
 from sqlalchemy.sql.functions import count
 
-from app.booking.models import Bookings
+from app.booking.booking_models import Bookings
 from app.dao.base import BaseDAO
 from app.database import async_session_maker
-from app.hotels.models import Hotels
-from app.hotels.rooms.models import Rooms
-from app.hotels.rooms.schemas import HotelRoomsSchema
+from app.hotels.hotel_models import Hotels
+from app.hotels.rooms.room_models import Rooms
+from app.hotels.rooms.room_schemas import HotelRoomsSchema
 
 
 class RoomsDAO(BaseDAO):

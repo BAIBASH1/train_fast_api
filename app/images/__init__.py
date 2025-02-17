@@ -8,6 +8,6 @@ Modules:
     - router: Defines the FastAPI router for uploading hotel images and processing them asynchronously.
 """
 
-from .router import router
+from .images_router import router
 
 __all__ = ["router"]

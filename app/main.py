@@ -12,13 +12,13 @@ from redis import asyncio as aioredis
 from sqladmin import Admin
 
 from app.admin.view import BookingsAdmin, HotelsAdmin, RoomsAdmin, UserAdmin
-from app.booking.router import router as router_bookings
+from app.booking.booking_router import router as router_bookings
 from app.database import engine
-from app.hotels.rooms.router import router as router_hotels_rooms
-from app.images.router import router as router_images
+from app.hotels.rooms.room_router import router as router_hotels_rooms
+from app.images.images_router import router as router_images
 from app.logger import logger
-from app.pages.router import router as router_page
-from app.users.router import router as router_users
+from app.pages.pages_router import router as router_page
+from app.users.user_router import router as router_users
 from config import settings
 
 app = FastAPI()

@@ -13,9 +13,9 @@ Modules:
     - router: Contains FastAPI routers for managing API endpoints for hotel operations.
 """
 
-from app.hotels.dao import HotelsDAO
-from app.hotels.models import Hotels
-from app.hotels.schemas import HotelsRoomsLeftSchema
-from app.hotels.router import router
+from app.hotels.hotel_dao import HotelsDAO
+from app.hotels.hotel_models import Hotels
+from app.hotels.hotel_schemas import HotelsRoomsLeftSchema
+from app.hotels.hotel_router import router
 
 __all__ = ["HotelsDAO", "Hotels", "HotelsRoomsLeftSchema", "router"]

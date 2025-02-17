@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from app.booking.dao import BookingDAO
+from app.booking.booking_dao import BookingDAO
 
 
 async def test_add_and_get_booking():
