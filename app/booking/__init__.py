@@ -16,8 +16,8 @@ The package facilitates the full lifecycle of booking management from database o
 
 from .booking_dao import BookingDAO
 from .booking_models import Bookings
-from .booking_schemas import BookingsSchema, BookingsInfoSchema
 from .booking_router import router
+from .booking_schemas import BookingsInfoSchema, BookingsSchema
 
 __all__ = [
     "BookingDAO",

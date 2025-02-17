@@ -19,8 +19,8 @@ from app.booking.booking_models import Bookings
 from app.dao.base import BaseDAO
 from app.database import async_session_maker
 from app.hotels.hotel_models import Hotels
-from app.hotels.rooms.room_models import Rooms
 from app.hotels.hotel_schemas import HotelsRoomsLeftSchema
+from app.hotels.rooms.room_models import Rooms
 
 
 class HotelsDAO(BaseDAO):

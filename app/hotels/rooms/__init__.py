@@ -14,7 +14,7 @@ Modules:
 
 from .room_dao import RoomsDAO
 from .room_models import Rooms
-from .room_schemas import HotelRoomsSchema
 from .room_router import router
+from .room_schemas import HotelRoomsSchema
 
 __all__ = ["RoomsDAO", "Rooms", "HotelRoomsSchema", "router"]

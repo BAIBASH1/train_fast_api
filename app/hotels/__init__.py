@@ -15,7 +15,7 @@ Modules:
 
 from app.hotels.hotel_dao import HotelsDAO
 from app.hotels.hotel_models import Hotels
-from app.hotels.hotel_schemas import HotelsRoomsLeftSchema
 from app.hotels.hotel_router import router
+from app.hotels.hotel_schemas import HotelsRoomsLeftSchema
 
 __all__ = ["HotelsDAO", "Hotels", "HotelsRoomsLeftSchema", "router"]

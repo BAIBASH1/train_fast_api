@@ -11,8 +11,8 @@ Endpoints:
 
 from datetime import date
 
-from app.hotels.rooms.room_dao import RoomsDAO
 from app.hotels.hotel_router import router
+from app.hotels.rooms.room_dao import RoomsDAO
 
 
 @router.get("/{hotel_id}/rooms}")
