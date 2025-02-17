@@ -22,7 +22,7 @@ services:
     depends_on:
       - db
       - redis
-    command: ["/booking/docker/app.sh"]
+    command: ["/booking/docker_scripts/app.sh"]
     ports:
       - 8080:8000
 
@@ -31,7 +31,7 @@ services:
     build:
       context: .
     container_name: booking_celery
-    command: ["/booking/docker/celery.sh", "celery"]
+    command: ["/booking/docker_scripts/celery.sh", "celery"]
     env_file:
       - .env-non-dev
     depends_on:
@@ -43,7 +43,7 @@ services:
     build:
       context: .
     container_name: booking_flower
-    command: [ "/booking/docker/celery.sh", "flower"]
+    command: [ "/booking/docker_scripts/celery.sh", "flower"]
     env_file:
       - .env-non-dev
     depends_on:
