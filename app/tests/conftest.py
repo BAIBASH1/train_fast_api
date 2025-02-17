@@ -101,15 +101,10 @@ async def init_redis():
     await startup()
 
 
-@pytest.fixture(autouse=True)  # автоматическое применение ко всем тестам
+@pytest.fixture(autouse=True)
 def disable_logging():
-    # Сохраняем исходный уровень логирования
     original_level = logging.getLogger().level
-
-    # Устанавливаем уровень CRITICAL
     logging.getLogger().setLevel(logging.CRITICAL)
+    yield
 
-    yield  # здесь выполняются тесты
-
-    # Восстанавливаем исходный уровень
     logging.getLogger().setLevel(original_level)

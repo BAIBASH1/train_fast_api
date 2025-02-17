@@ -34,13 +34,6 @@ async def test_get_add_and_get_bookings(
     assert len(response_user_bookings.json()) == bookings_quantity
 
 
-# async def test_delete_booking(authenticated_ac: AsyncClient):
-#     await authenticated_ac.delete(
-#         "/bookings",
-#         params={"room_id": 4}
-#     )
-
-
 @pytest.mark.parametrize(
     "location, date_from, date_to, status_code",
     [
