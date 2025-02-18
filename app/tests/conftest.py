@@ -7,12 +7,12 @@ import pytest
 from httpx import AsyncClient
 from sqlalchemy import insert
 
+from app.app_components.redis_cache import init_cache
 from app.booking.booking_models import Bookings
 from app.database import Base, async_session_maker, engine, init_models
 from app.hotels.hotel_models import Hotels
 from app.hotels.rooms.room_models import Rooms
 from app.main import app as fastapi_app
-from app.main import startup
 from app.users.user_models import Users
 from config import settings
 
@@ -102,7 +102,7 @@ async def authenticated_ac():
 
 @pytest.fixture(scope="session", autouse=True)
 async def init_redis():
-    await startup()
+    init_cache()
 
 
 @pytest.fixture(autouse=True)
