@@ -64,8 +64,8 @@ class Settings(BaseSettings):
         Returns:
             str: The PostgreSQL database connection string.
         """
-        db_creds = f'{self.DB_USER}:{self.DB_PASS}'
-        db_address = f'{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}'
+        db_creds = f"{self.DB_USER}:{self.DB_PASS}"
+        db_address = f"{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
         return f"postgresql+asyncpg://{db_creds}@{db_address}"
 
     TEST_DB_HOST: str
@@ -90,8 +90,8 @@ class Settings(BaseSettings):
         Returns:
            str: The PostgreSQL test database connection string.
         """
-        test_db_creds = f'{self.TEST_DB_USER}:{self.TEST_DB_PASS}'
-        test_db_address = f'{self.TEST_DB_HOST}:{self.TEST_DB_PORT}/{self.TEST_DB_NAME}'
+        test_db_creds = f"{self.TEST_DB_USER}:{self.TEST_DB_PASS}"
+        test_db_address = f"{self.TEST_DB_HOST}:{self.TEST_DB_PORT}/{self.TEST_DB_NAME}"
         return f"postgresql+asyncpg://{test_db_creds}@{test_db_address}"
 
     class Config:

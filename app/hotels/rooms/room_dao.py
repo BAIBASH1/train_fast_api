@@ -74,10 +74,9 @@ class RoomsDAO(BaseDAO):
                 Rooms.quantity,
                 Rooms.image_id,
                 ((date_to - date_from) * Rooms.price).label("total_price"),
-                (
-                    Hotels.rooms_quantity
-                    - func.coalesce(bookings_in_dates.c.non_left, 0)
-                ).label("rooms_free"),
+                (Hotels.rooms_quantity - func.coalesce(bookings_in_dates.c.non_left, 0)).label(
+                    "rooms_free"
+                ),
             )
             .select_from(Hotels)
             .join(Rooms, Hotels.id == Rooms.hotel_id, isouter=True)
@@ -87,9 +86,7 @@ class RoomsDAO(BaseDAO):
                 isouter=True,
             )
             .where(hotel_id == Hotels.id)
-            .group_by(
-                Rooms.id, Hotels.rooms_quantity, bookings_in_dates.c.non_left
-            )
+            .group_by(Rooms.id, Hotels.rooms_quantity, bookings_in_dates.c.non_left)
         )
 
         async with async_session_maker() as session:

@@ -31,6 +31,6 @@ class Users(Base):
     email: Mapped[str] = mapped_column(nullable=False)
     hashed_password: Mapped[str] = mapped_column(nullable=False)
 
-    bookings: Mapped[list["Bookings"]] = relationship(
+    bookings: Mapped[list["Bookings"]] = relationship(  # noqa: F821
         back_populates="user",
     )

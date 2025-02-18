@@ -61,9 +61,7 @@ async def get_current_user(token: str = Depends(get_token)) -> Users:
         UserIsNotPresentException: If no user is found in the token.
     """
     try:
-        payload = jwt.decode(
-            token, settings.SECRET_KEY_FOR_HASH, settings.ALGORITHM_FOR_HASH
-        )
+        payload = jwt.decode(token, settings.SECRET_KEY_FOR_HASH, settings.ALGORITHM_FOR_HASH)
     except JWTError:
         raise IncorrectTokenFormatException
 

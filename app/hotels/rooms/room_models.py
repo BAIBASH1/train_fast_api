@@ -36,9 +36,7 @@ class Rooms(Base):
     __tablename__ = "rooms"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    hotel_id: Mapped[int] = mapped_column(
-        ForeignKey("hotels.id"), nullable=False
-    )
+    hotel_id: Mapped[int] = mapped_column(ForeignKey("hotels.id"), nullable=False)
     name: Mapped[str] = mapped_column(nullable=False)
     description: Mapped[str]
     price: Mapped[int] = mapped_column(nullable=False)
@@ -46,10 +44,10 @@ class Rooms(Base):
     quantity: Mapped[int] = mapped_column(nullable=False)
     image_id: Mapped[int]
 
-    bookings: Mapped["Bookings"] = relationship(
+    bookings: Mapped["Bookings"] = relationship(  # noqa: F821
         back_populates="room",
     )
 
-    hotel: Mapped["Hotels"] = relationship(
+    hotel: Mapped["Hotels"] = relationship(  # noqa: F821
         back_populates="rooms",
     )

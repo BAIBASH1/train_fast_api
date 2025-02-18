@@ -74,21 +74,16 @@ class HotelsDAO(BaseDAO):
         hotels_in_location = (
             select(
                 Hotels.__table__.columns,
-                (
-                    Hotels.rooms_quantity
-                    - func.coalesce(busy_rooms.c.non_left, 0)
-                ).label("rooms_left"),
+                (Hotels.rooms_quantity - func.coalesce(busy_rooms.c.non_left, 0)).label(
+                    "rooms_left"
+                ),
             )
             .select_from(Hotels)
             .join(busy_rooms, Hotels.id == busy_rooms.c.hotel_id, isouter=True)
             .where(
                 and_(
                     Hotels.location.like(f"%{location}%"),
-                    (
-                        Hotels.rooms_quantity
-                        - func.coalesce(busy_rooms.c.non_left, 0)
-                    )
-                    > 0,
+                    (Hotels.rooms_quantity - func.coalesce(busy_rooms.c.non_left, 0)) > 0,
                 )
             )
         )

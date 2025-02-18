@@ -39,6 +39,6 @@ class Hotels(Base):
     rooms_quantity: Mapped[int] = mapped_column(nullable=False)
     image_id: Mapped[int]
 
-    rooms: Mapped["Rooms"] = relationship(
+    rooms: Mapped["Rooms"] = relationship(  # noqa: F821
         back_populates="hotel",
     )

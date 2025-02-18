@@ -16,9 +16,9 @@ from pydantic import parse_obj_as
 from app.booking.booking_dao import BookingDAO
 from app.booking.booking_schemas import BookingsInfoSchema, BookingsSchema
 from app.exceptions import (
+    DateToEarlierThanDateFrom,
     NoRowFindToDelete,
     RoomCannotBeBookedException,
-    DateToEarlierThanDateFrom,
 )
 from app.tasks.tasks import send_bookings_confirmation_email
 from app.users.user_dependencies import get_current_user
@@ -86,12 +86,8 @@ async def add_booking(
     if booked_room is None:
         raise RoomCannotBeBookedException
 
-    booked_room_dict = parse_obj_as(
-        BookingsSchema, booked_room.__dict__
-    ).dict()
-    send_bookings_confirmation_email.delay(
-        bookings=booked_room_dict, email_to=user.email
-    )
+    booked_room_dict = parse_obj_as(BookingsSchema, booked_room.__dict__).dict()
+    send_bookings_confirmation_email.delay(bookings=booked_room_dict, email_to=user.email)
 
     return booked_room
 

@@ -21,9 +21,7 @@ templates = Jinja2Templates(directory="app/templates")
 
 
 @router.get("/hotels")
-async def get_hotels_page(
-    request: Request, hotels=Depends(get_hotels_by_location_and_time)
-):
+async def get_hotels_page(request: Request, hotels=Depends(get_hotels_by_location_and_time)):
     """
     Renders the hotels page displaying available hotels based on the location and date range.
 

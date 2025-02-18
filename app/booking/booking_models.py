@@ -45,15 +45,13 @@ class Bookings(Base):
     date_from: Mapped[date] = mapped_column(nullable=False)
     date_to: Mapped[date] = mapped_column(nullable=False)
     price: Mapped[int]
-    total_cost: Mapped[int] = mapped_column(
-        Computed("(date_to - date_from) * price")
-    )
+    total_cost: Mapped[int] = mapped_column(Computed("(date_to - date_from) * price"))
     total_days: Mapped[int] = mapped_column(Computed("(date_to - date_from)"))
 
-    user: Mapped["Users"] = relationship(
+    user: Mapped["Users"] = relationship(  # noqa: F821
         back_populates="bookings",
     )
 
-    room: Mapped["Rooms"] = relationship(
+    room: Mapped["Rooms"] = relationship(  # noqa: F821
         back_populates="bookings",
     )
