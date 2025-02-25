@@ -20,6 +20,7 @@ from fastapi_cache.decorator import cache
 from app.exceptions import DateToEarlierThanDateFrom, LargeIntervalBetweenDates
 from app.hotels.hotel_schemas import HotelsRoomsLeftSchema
 
+MAX_PERIOD_OF_DAYS_FOR_SEARCH_HOTEL = 30
 router = APIRouter(prefix="/hotels", tags=["Отели"])
 
 
@@ -62,10 +63,10 @@ async def get_hotels_by_location_and_time(
 
     if date_from > date_to:
         raise DateToEarlierThanDateFrom
-    if (date_to - date_from).days > 30:
+    if (date_to - date_from).days > MAX_PERIOD_OF_DAYS_FOR_SEARCH_HOTEL:
         raise LargeIntervalBetweenDates
 
-    if (date_to - date_from).days <= 30:
+    if (date_to - date_from).days <= MAX_PERIOD_OF_DAYS_FOR_SEARCH_HOTEL:
         hotels = await HotelsDAO.find_all_in_location_with_rooms_left(
             location=location,
             date_from=date_from,
