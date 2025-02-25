@@ -6,10 +6,15 @@ Each room is associated with a specific hotel and contains information such as
 room name, description, price, services, and quantity.
 """
 
+from typing import TYPE_CHECKING
+
 from sqlalchemy import JSON, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
+
+if TYPE_CHECKING:
+    from app import Bookings, Hotels
 
 
 class Rooms(Base):
@@ -44,10 +49,10 @@ class Rooms(Base):
     quantity: Mapped[int] = mapped_column(nullable=False)
     image_id: Mapped[int]
 
-    bookings: Mapped["Bookings"] = relationship(  # noqa: F821
+    bookings: Mapped["Bookings"] = relationship(
         back_populates="room",
     )
 
-    hotel: Mapped["Hotels"] = relationship(  # noqa: F821
+    hotel: Mapped["Hotels"] = relationship(
         back_populates="rooms",
     )

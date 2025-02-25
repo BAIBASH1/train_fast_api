@@ -6,9 +6,14 @@ attributes such as email and hashed password. The `Users` model also establishes
 with the `Bookings` model to associate users with their bookings.
 """
 
+from typing import TYPE_CHECKING
+
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
+
+if TYPE_CHECKING:
+    from app import Bookings
 
 
 class Users(Base):
@@ -31,6 +36,6 @@ class Users(Base):
     email: Mapped[str] = mapped_column(nullable=False)
     hashed_password: Mapped[str] = mapped_column(nullable=False)
 
-    bookings: Mapped[list["Bookings"]] = relationship(  # noqa: F821
+    bookings: Mapped[list["Bookings"]] = relationship(
         back_populates="user",
     )

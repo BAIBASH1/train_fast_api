@@ -6,10 +6,15 @@ contains information such as name, location, services, room quantity, and associ
 The model supports relationships with rooms and bookings.
 """
 
+from typing import TYPE_CHECKING
+
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
+
+if TYPE_CHECKING:
+    from app import Rooms
 
 
 class Hotels(Base):
@@ -39,6 +44,6 @@ class Hotels(Base):
     rooms_quantity: Mapped[int] = mapped_column(nullable=False)
     image_id: Mapped[int]
 
-    rooms: Mapped["Rooms"] = relationship(  # noqa: F821
+    rooms: Mapped["Rooms"] = relationship(
         back_populates="hotel",
     )
